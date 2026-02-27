@@ -1,0 +1,197 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FarmConnect</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Source+Sans+Pro:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="navbar">
+<a href="#" class="logo" onclick="showView('home')"><div class="logo-icon"><i class="fas fa-wheat-awn"></i></div>FarmConnect</a>
+<ul class="nav-links">
+<li><a href="#" onclick="showView('home')" class="active" data-view="home">Home</a></li>
+<li><a href="#" onclick="showView('resources')" data-view="resources">Resources</a></li>
+<li><a href="#" onclick="showView('experts')" data-view="experts">Experts</a></li>
+<li><a href="#" onclick="showView('forum')" data-view="forum">Forum</a></li>
+<li><a href="#" onclick="showView('initiatives')" data-view="initiatives">Initiatives</a></li>
+</ul>
+<div class="nav-right">
+<div id="authButtons">
+<button class="btn btn-outline" onclick="showAuthModal('login')">Login</button>
+<button class="btn btn-primary" onclick="showAuthModal('register')">Get Started</button>
+</div>
+<div id="userMenuContainer" style="display:none">
+<div class="user-menu" onclick="toggleUserDropdown()">
+<div class="user-avatar" id="userAvatar">U</div>
+<div class="user-dropdown" id="userDropdown">
+<a href="#" onclick="showDashboard()"><i class="fas fa-user"></i> Dashboard</a>
+<a href="#" onclick="showView('profile')"><i class="fas fa-cog"></i> Profile</a>
+<button onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</button>
+</div>
+</div>
+</div>
+<button class="mobile-menu-btn" onclick="toggleMobileMenu()"><i class="fas fa-bars"></i></button>
+</div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+<a href="#" onclick="showView('home');toggleMobileMenu()">Home</a>
+<a href="#" onclick="showView('resources');toggleMobileMenu()">Resources</a>
+<a href="#" onclick="showView('experts');toggleMobileMenu()">Experts</a>
+<a href="#" onclick="showView('forum');toggleMobileMenu()">Forum</a>
+<a href="#" onclick="showView('initiatives');toggleMobileMenu()">Initiatives</a>
+</div>
+<main>
+<div class="view active" id="homeView">
+<section class="hero">
+<div class="hero-content">
+<div class="hero-text">
+<h1>Empowering Farmers, Feeding the Future</h1>
+<p>Connect with agricultural experts and access resources.</p>
+<div class="hero-buttons">
+<button class="btn btn-secondary" onclick="showAuthModal('register')">Get Started</button>
+<button class="btn btn-outline" style="border-color:white;color:white" onclick="showView('resources')">Learn More</button>
+</div>
+<div class="hero-stats">
+<div class="stat-item"><div class="stat-number">5,000+</div><div class="stat-label">Farmers</div></div>
+<div class="stat-item"><div class="stat-number">150+</div><div class="stat-label">Experts</div></div>
+<div class="stat-item"><div class="stat-number">200+</div><div class="stat-label">Resources</div></div>
+</div>
+</div>
+</div>
+</section>
+<section class="features-section">
+<div class="section-header"><h2>How We Help</h2><p>Support for the agricultural community</p></div>
+<div class="cards-grid">
+<div class="card" onclick="showView('resources')"><div class="card-icon"><i class="fas fa-book-open"></i></div><h3>Resources</h3><p>Access guides and research.</p></div>
+<div class="card" onclick="showView('experts')"><div class="card-icon"><i class="fas fa-user-graduate"></i></div><h3>Experts</h3><p>Connect with experts.</p></div>
+<div class="card" onclick="showView('forum')"><div class="card-icon"><i class="fas fa-comments"></i></div><h3>Forum</h3><p>Join discussions.</p></div>
+<div class="card" onclick="showView('initiatives')"><div class="card-icon"><i class="fas fa-handshake"></i></div><h3>Initiatives</h3><p>Government schemes.</p></div>
+</div>
+</section>
+</div>
+<div class="view" id="resourcesView">
+<div class="view-header"><h1>Resources</h1><p>Agricultural guides</p></div>
+<div class="resource-filters">
+<button class="filter-btn active" onclick="filterResources('all')">All</button>
+<button class="filter-btn" onclick="filterResources('crop')">Crops</button>
+<button class="filter-btn" onclick="filterResources('livestock')">Livestock</button>
+<button class="filter-btn" onclick="filterResources('technology')">Tech</button>
+<button class="filter-btn" onclick="filterResources('scheme')">Schemes</button>
+</div>
+<div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Search..." id="resourceSearch" onkeyup="searchResources()"></div>
+<div id="resourcesList"></div>
+</div>
+<div class="view" id="expertsView">
+<div class="view-header"><h1>Experts</h1><p>Find experts</p></div>
+<div class="search-box"><i class="fas fa-search"></i><input type="text" placeholder="Search..." id="expertSearch" onkeyup="searchExperts()"></div>
+<div class="resource-filters">
+<button class="filter-btn active" onclick="filterExperts('all')">All</button>
+<button class="filter-btn" onclick="filterExperts('crop')">Crops</button>
+<button class="filter-btn" onclick="filterExperts('soil')">Soil</button>
+<button class="filter-btn" onclick="filterExperts('livestock')">Livestock</button>
+<button class="filter-btn" onclick="filterExperts('technology')">Tech</button>
+</div>
+<div id="expertsList"></div>
+</div>
+<div class="view" id="forumView">
+<div class="view-header"><h1>Forum</h1><p>Community discussions</p></div>
+<div style="margin-bottom:24px"><button class="btn btn-primary" onclick="showCreatePost()" id="createPostBtn"><i class="fas fa-plus"></i> Create Post</button></div>
+<div class="resource-filters">
+<button class="filter-btn active" onclick="filterForum('all')">All</button>
+<button class="filter-btn" onclick="filterForum('discussion')">Discussion</button>
+<button class="filter-btn" onclick="filterForum('question')">Question</button>
+<button class="filter-btn" onclick="filterForum('tips')">Tips</button>
+<button class="filter-btn" onclick="filterForum('success')">Success</button>
+</div>
+<div id="forumList"></div>
+</div>
+<div class="view" id="initiativesView">
+<div class="view-header"><h1>Initiatives</h1><p>Government programs</p></div>
+<div class="cards-grid" id="initiativesList"></div>
+</div>
+<div class="view" id="profileView">
+<div class="view-header"><h1>Profile</h1><p>Manage account</p></div>
+<div class="dashboard-card" style="max-width:600px">
+<form id="profileForm" onsubmit="updateProfile(event)">
+<div class="form-group"><label>Name</label><input type="text" id="profileName" required></div>
+<div class="form-group"><label>Email</label><input type="email" id="profileEmail" required></div>
+<div class="form-group"><label>Phone</label><input type="tel" id="profilePhone"></div>
+<div class="form-group" id="farmDetailsGroup" style="display:none"><label>Location</label><input type="text" id="profileLocation"></div>
+<div class="form-group" id="specializationGroup" style="display:none"><label>Specialization</label><input type="text" id="profileSpecialization"></div>
+<div class="form-group" id="bioGroup" style="display:none"><label>Bio</label><textarea id="profileBio"></textarea></div>
+<button type="submit" class="btn btn-primary">Save</button>
+</form>
+</div>
+</div>
+<div class="view" id="adminDashboardView">
+<div class="view-header"><h1>Admin Dashboard</h1><p>Platform management</p></div>
+<div class="dashboard-grid" style="margin-bottom:32px">
+<div class="stat-card"><h4>Users</h4><div class="number" id="adminTotalUsers">0</div></div>
+<div class="stat-card"><h4>Farmers</h4><div class="number" id="adminActiveFarmers">0</div></div>
+<div class="stat-card"><h4>Experts</h4><div class="number" id="adminExperts">0</div></div>
+<div class="stat-card"><h4>Posts</h4><div class="number" id="adminPosts">0</div></div>
+</div>
+<div class="dashboard-card"><h3>Users</h3><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th></tr></thead><tbody id="adminUserTable"></tbody></table></div></div>
+<div class="dashboard-card" style="margin-top:24px"><h3>Expert Approvals</h3><div style="overflow-x:auto"><table class="data-table"><thead><tr><th>Name</th><th>Specialization</th><th>Status</th><th>Actions</th></tr></thead><tbody id="adminExpertTable"></tbody></table></div></div>
+</div>
+<div class="view" id="farmerDashboardView">
+<div class="view-header"><h1>Farmer Dashboard</h1><p>Your overview</p></div>
+<div class="dashboard-grid" style="margin-bottom:32px">
+<div class="stat-card"><h4>Saved</h4><div class="number" id="farmerSavedResources">0</div></div>
+<div class="stat-card"><h4>Initiatives</h4><div class="number" id="farmerInitiatives">0</div></div>
+<div class="stat-card"><h4>Posts</h4><div class="number" id="farmerPosts">0</div></div>
+</div>
+<div class="dashboard-grid">
+<div class="dashboard-card"><h3>Bookmarks</h3><div id="farmerBookmarks"></div></div>
+<div class="dashboard-card"><h3>Initiatives</h3><div id="farmerInitiativesList"></div></div>
+</div>
+</div>
+<div class="view" id="expertDashboardView">
+<div class="view-header"><h1>Expert Dashboard</h1><p>Manage content</p></div>
+<div class="dashboard-grid" style="margin-bottom:32px">
+<div class="stat-card"><h4>Consultations</h4><div class="number" id="expertConsultations">0</div></div>
+<div class="stat-card"><h4>Questions</h4><div class="number" id="expertAnswers">0</div></div>
+<div class="stat-card"><h4>Content</h4><div class="number" id="expertContent">0</div></div>
+</div>
+<div class="dashboard-card"><h3>Questions</h3><div id="expertQuestions"></div></div>
+</div>
+</main>
+<footer>
+<div class="footer-content">
+<div class="footer-section"><h4>FarmConnect</h4><p>Empowering farmers.</p></div>
+<div class="footer-section"><h4>Links</h4><a href="#" onclick="showView('home')">Home</a><a href="#" onclick="showView('resources')">Resources</a><a href="#" onclick="showView('experts')">Experts</a><a href="#" onclick="showView('forum')">Forum</a></div>
+<div class="footer-section"><h4>Contact</h4><p>support@farmconnect.com</p></div>
+</div>
+<div class="footer-bottom"><p>&copy; 2024 FarmConnect</p></div>
+</footer>
+<div class="modal-overlay" id="authModal">
+<div class="modal">
+<h2 id="authModalTitle">Login</h2>
+<form id="authForm" onsubmit="handleAuth(event)">
+<div class="form-group" id="nameGroup" style="display:none"><label>Name</label><input type="text" id="authName"></div>
+<div class="form-group"><label>Email</label><input type="email" id="authEmail" required></div>
+<div class="form-group"><label>Password</label><input type="password" id="authPassword" required></div>
+<div class="form-group" id="roleGroup" style="display:none"><label>Role</label><div class="role-selector"><div class="role-option" data-role="farmer" onclick="selectRole('farmer')"><i class="fas fa-tractor"></i><span>Farmer</span></div><div class="role-option" data-role="expert" onclick="selectRole('expert')"><i class="fas fa-user-graduate"></i><span>Expert</span></div><div class="role-option" data-role="public" onclick="selectRole('public')"><i class="fas fa-user"></i><span>Public</span></div><div class="role-option" data-role="admin" onclick="selectRole('admin')"><i class="fas fa-user-shield"></i><span>Admin</span></div></div></div>
+<div class="modal-buttons"><button type="button" class="btn btn-outline" onclick="closeAuthModal()">Cancel</button><button type="submit" class="btn btn-primary" id="authSubmitBtn">Login</button></div>
+</form>
+<div class="modal-switch"><span id="authSwitchText">No account?</span><a onclick="toggleAuthMode()" id="authSwitchLink">Register</a></div>
+</div>
+</div>
+<div class="modal-overlay" id="postModal">
+<div class="modal">
+<h2>Create Post</h2>
+<form id="postForm" onsubmit="createPost(event)">
+<div class="form-group"><label>Title</label><input type="text" id="postTitle" required></div>
+<div class="form-group"><label>Category</label><select id="postCategory"><option value="discussion">Discussion</option><option value="question">Question</option><option value="tips">Tips</option><option value="success">Success</option></select></div>
+<div class="form-group"><label>Content</label><textarea id="postContent" required></textarea></div>
+<div class="modal-buttons"><button type="button" class="btn btn-outline" onclick="closePostModal()">Cancel</button><button type="submit" class="btn btn-primary">Post</button></div>
+</form>
+</div>
+</div>
+<div class="toast-container" id="toastContainer"></div>
+<script src="app.js"></script>
+</body>
+</html>
